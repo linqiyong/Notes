@@ -1,0 +1,282 @@
+\documentclass[a4paper,12pt]{article}
+
+% ===== 基础包配置 =====
+\usepackage[UTF8]{ctex}                    % 中文支持
+\usepackage{geometry}                      % 页面布局
+\usepackage{amsmath,amssymb,amsfonts}      % 数学符号
+\usepackage{mathtools}                     % 数学工具扩展
+\usepackage{amsthm}                        % 定理环境
+\usepackage{tcolorbox}                     % 彩色框
+\tcbuselibrary{skins,breakable,theorems}
+\usepackage{enumitem}                      % 列表控制
+\usepackage{hyperref}                      % 超链接
+\usepackage{booktabs}                      % 表格优化
+\usepackage{graphicx}                      % 图片支持
+\usepackage{fancyhdr}                      % 页眉页脚
+\usepackage{titlesec}                      % 标题格式
+\usepackage{xcolor}                        % 颜色支持
+\usepackage{tikz}                          % 画图支持
+
+% ===== 页面布局 =====
+\geometry{
+    a4paper,
+    left=2.5cm,
+    right=2.5cm,
+    top=2.8cm,
+    bottom=2.5cm
+}
+
+% ===== 颜色定义 =====
+\definecolor{darkgray}{RGB}{60,60,60}
+\definecolor{mediumgray}{RGB}{120,120,120}
+\definecolor{lightgray}{RGB}{248,248,250}
+\definecolor{borderblue}{RGB}{70,130,180}
+\definecolor{borderpurple}{RGB}{147,112,219}
+\definecolor{borderorange}{RGB}{255,140,0}
+\definecolor{borderred}{RGB}{219,112,147}
+
+% ===== 段落和行距设置 =====
+\setlength{\parindent}{0pt}                % 无缩进
+\setlength{\parskip}{1ex}                  % 段间距
+\renewcommand{\baselinestretch}{1.15}      % 行距
+
+% ===== 页眉页脚设置 =====
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small 考研数学笔记}
+\fancyhead[C]{\small \leftmark}
+\fancyhead[R]{\small \thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+    \color{lightgray}\leaders\hrule height \headrulewidth\hfill}}
+
+% ===== 章节格式重定义 =====
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{darkgray}}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{darkgray}}
+  {\thesubsection}{1em}{}
+
+% ===== 统一的环境样式设置 =====
+% 共享的样式参数
+\def\envboxwidth{0.8pt}
+\def\envarc{2pt}
+\def\envpadding{6pt}
+\def\envfont{\small}
+\def\envtitlefont{\bfseries\small}
+\def\envcornerfont{\fontsize{8}{8}\selectfont\bfseries}
+
+% ===== 数学环境定义 - 统一样式 =====
+% 定义环境
+\newtcolorbox{definition}[1][]{
+    breakable,
+    enhanced,
+    colback=lightgray,
+    colframe=borderblue,
+    colbacktitle=lightgray,
+    coltitle=darkgray,
+    title=定义,
+    fonttitle=\envtitlefont,
+    fontupper=\envfont,
+    arc=\envarc,
+    boxrule=\envboxwidth,
+    top=\envpadding,
+    left=\envpadding,
+    right=\envpadding,
+    bottom=\envpadding,
+    overlay first={
+        \node[anchor=north east, inner sep=4pt] at (frame.north east) 
+            {\textcolor{borderblue}{\envcornerfont D}};
+    },
+    #1
+}
+
+% 定理环境
+\newtcolorbox{corollary}[1][]{
+    breakable,
+    enhanced,
+    colback=lightgray,
+    colframe=bordergreen,
+    colbacktitle=lightgray,
+    coltitle=darkgray,
+    title=定理,
+    fonttitle=\envtitlefont,
+    fontupper=\envfont,
+    arc=\envarc,
+    boxrule=\envboxwidth,
+    top=\envpadding,
+    left=\envpadding,
+    right=\envpadding,
+    bottom=\envpadding,
+    overlay first={
+        \node[anchor=north east, inner sep=4pt] at (frame.north east) 
+            {\textcolor{bordergreen}{\envcornerfont C}};
+    },
+    #1
+}
+
+% 证明环境
+\newtcolorbox{proofbox}[1][]{
+    breakable,
+    enhanced,
+    colback=lightgray,
+    colframe=borderpurple,
+    colbacktitle=lightgray,
+    coltitle=darkgray,
+    title=证明,
+    fonttitle=\envtitlefont,
+    fontupper=\envfont,
+    arc=\envarc,
+    boxrule=\envboxwidth,
+    top=\envpadding,
+    left=\envpadding,
+    right=\envpadding,
+    bottom=\envpadding,
+    overlay first={
+        \node[anchor=north east, inner sep=4pt] at (frame.north east) 
+            {\textcolor{borderpurple}{\envcornerfont P}};
+    },
+    overlay last={
+        \node[anchor=south east, inner sep=3pt] at (frame.south east) 
+            {\textcolor{borderpurple}{\envcornerfont $\square$}};
+    },
+    #1
+}
+
+% 例题环境
+\newtcolorbox{example}[1][]{
+    breakable,
+    enhanced,
+    colback=lightgray,
+    colframe=borderorange,
+    colbacktitle=lightgray,
+    coltitle=darkgray,
+    title=例题,
+    fonttitle=\envtitlefont,
+    fontupper=\envfont,
+    arc=\envarc,
+    boxrule=\envboxwidth,
+    top=\envpadding,
+    left=\envpadding,
+    right=\envpadding,
+    bottom=\envpadding,
+    overlay first={
+        \node[anchor=north east, inner sep=4pt] at (frame.north east) 
+            {\textcolor{borderorange}{\envcornerfont E}};
+    },
+    #1
+}
+
+% 公式环境
+\newtcolorbox{Formula}[1][]{
+    breakable,
+    enhanced,
+    colback=lightgray,
+    colframe=borderred,
+    colbacktitle=lightgray,
+    coltitle=darkgray,
+    title=公式,
+    fonttitle=\envtitlefont,
+    fontupper=\envfont,
+    arc=\envarc,
+    boxrule=\envboxwidth,
+    top=\envpadding,
+    left=\envpadding,
+    right=\envpadding,
+    bottom=\envpadding,
+    overlay first={
+        \node[anchor=north east, inner sep=4pt] at (frame.north east) 
+            {\textcolor{borderred}{\envcornerfont E}};
+    },
+    #1
+}
+
+% ===== 环境简写 =====
+\newcommand{\DY}[3]{\begin{definition}{#1}{#2}#3\end{definition}}   %定义
+\newcommand{\TL}[3]{\begin{corollary}{#1}{#2}#3\end{corollary}}     %定理
+\newcommand{\ZM}[3]{\begin{dproofbox}{#1}{#2}#3\end{dproofbox}}     %证明
+\newcommand{\LT}[3]{\begin{example}{#1}{#2}#3\end{example}}         %例题
+\newcommand{\GS}[3]{\begin{Formula}{#1}{#2}#3\end{Formula}}         %公式
+
+
+% ===== 数学命令定义 =====
+% 常用数学符号
+\newcommand{\R}{\mathbb{R}}                % 实数集
+\newcommand{\N}{\mathbb{N}}                % 自然数集
+\newcommand{\Z}{\mathbb{Z}}                % 整数集
+\newcommand{\Q}{\mathbb{Q}}                % 有理数集
+\newcommand{\C}{\mathbb{C}}                % 复数集
+\newcommand{\dx}{\mathop{}\!\mathrm{d}x}   % 微分符号
+\newcommand{\dy}{\mathop{}\!\mathrm{d}y}   % 微分符号
+\newcommand{\dz}{\mathop{}\!\mathrm{d}z}   % 微分符号
+\newcommand{\dt}{\mathop{}\!\mathrm{d}t}   % 微分符号
+
+% 数学运算符
+\DeclareMathOperator{\arccot}{arccot}
+\DeclareMathOperator{\arcsec}{arcsec}
+\DeclareMathOperator{\arccsc}{arccsc}
+
+% ===== 编写区 =====
+% ===== 文档开始 =====
+\begin{document}
+
+% ===== 标题区域 =====
+\newgeometry{margin = 0in}
+\parindent=0pt
+\includegraphics[width=21cm,height=11cm,]{picture/fengmiantu.jpg  }
+\begin{center}
+     \vspace*{5cm}
+    {\Huge \bfseries \textcolor{darkgray}{考研数学笔记}}\\[0.3em]
+    \vspace*{4cm}
+    \rule{\textwidth}{0.5pt}\\[1em]
+    
+    {\small 创建日期: 2025年10月29日}\\[0.2em]
+    {\small 作者: 小林 xiaolin}\\[0.2em]
+    {\small 最后更新: \today}\\[1em]
+    \rule{\textwidth}{0.5pt}
+\end{center}
+
+\vspace{1em}
+\newpage
+\newgeometry{margin = 1in}
+ {\Huge \bfseries \textcolor{darkgray}{前言}}\\[0.3em]
+
+本笔记基于孟亦然的模板基础上进行修改
+
+仅用于本人考研数学笔记的整理 
+
+原模板链接:https://www.latexstudio.net/index/details/index/mid/4714.html
+
+\newpage
+
+% ===== 目录 =====
+{\small
+\tableofcontents
+}
+\vspace{1.5em}
+
+\newpage
+
+% ===== 内容示例 =====
+
+\section{初等数学基础}
+
+
+
+\section{高等数学基础}
+
+
+
+\section{线性代数}
+
+
+\section{公式大全}
+
+
+
+
+
+
+% ===== 文档结束 =====
+\end{document}
